@@ -152,4 +152,4 @@ def delete_todo(todo_id: Annotated[str, "The ID of todo to delete"])->str:
 
 
 if __name__=="__main__":
-    mcp.run() # Run the mcp server
+    mcp.run(transport="stdio") # Run the mcp server with stdio transport
