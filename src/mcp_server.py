@@ -52,7 +52,7 @@ def _load_todos()->dict[str, Todo]:
     if not STORE_TODOS.exists():
         return {}
     
-    raw=json.loads(STORE_TODOS.read_text()) or "[]"
+    raw=json.loads(STORE_TODOS.read_text()) or []
     return {item["id"]: Todo.model_validate(item) for item in raw}
 
 
@@ -149,3 +149,7 @@ def delete_todo(todo_id: Annotated[str, "The ID of todo to delete"])->str:
         _save(todos) # saving the updated todos to the local file
     
     return f"Deleted todo with id: {todo_id}"
+
+
+if __name__=="__main__":
+    mcp.run() # Run the mcp server
