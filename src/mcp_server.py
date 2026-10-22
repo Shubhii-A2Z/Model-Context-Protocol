@@ -124,3 +124,14 @@ def list_todos(status: Annotated[Status | None, "pending, created, deleted or No
 
     todos.sort(key=lambda todo: todo.created_at, reverse=True)
     return todos
+
+
+@mcp.tool
+def get_todo(todo_id: Annotated[str, "The ID of todo to get"])->Todo | None:
+    """
+    Returns a todo by its ID
+    """
+
+    with _lock:
+        _, todo=_get_or_raise(todo_id=todo_id)
+    return todo
