@@ -135,3 +135,17 @@ def get_todo(todo_id: Annotated[str, "The ID of todo to get"])->Todo | None:
     with _lock:
         _, todo=_get_or_raise(todo_id=todo_id)
     return todo
+
+
+@mcp.tool
+def delete_todo(todo_id: Annotated[str, "The ID of todo to delete"])->str:
+    """
+    Delete the todo by id and return the id
+    """
+
+    with _lock:
+        todos, _=_get_or_raise(todo_id)
+        del todos[todo_id] # deleting the todo from the in memory dictionary
+        _save(todos) # saving the updated todos to the local file
+    
+    return f"Deleted todo with id: {todo_id}"
